@@ -6,13 +6,13 @@ from fastapi import FastAPI
 
 app = FastAPI()
 
-@app.get("/records/", response_model=List[models.RecordSchema])
-def show_records():
-    records = db.get_records()
-    print(records)
-    return records
+@app.get("/reviews/", response_model=List[models.ReviewSchema])
+def show_Reviews():
+    Reviews = db.get_reviews()
+    print(Reviews)
+    return Reviews
 
-@app.post("/record/")
-def update_item(item: models.RecordSchemaBase):
-    db.insert_record(item.country)
-    return {item.country+" created"}
+@app.post("/review/")
+def update_item(item: models.ReviewSchemaBase):
+    db.insert_review(item)
+    return {"created"}

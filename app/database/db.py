@@ -2,26 +2,28 @@ import string
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from .models import Base, Record
+from .models import Base, Review, ReviewSchemaBase
 
 engine = create_engine("sqlite:///mydb.db", echo=True, future=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base.metadata.create_all(engine)
 
-def get_records():
+def get_reviews():
     db = SessionLocal()
 
-    values = db.query(Record).all()
+    values = db.query(Review).all()
 
     db.close()
     return values
 
-def insert_record(countryName: string):
+def insert_review(param: ReviewSchemaBase):
     db = SessionLocal()
 
-    db_record = Record(
-        country=countryName,
+    entry = Review(
+        entry = param.entry,
+        language = param.language,
+        positive = param.positive
     )
 
-    db.add(db_record)
+    db.add(entry)
     db.commit()

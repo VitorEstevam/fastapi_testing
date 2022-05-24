@@ -1,20 +1,23 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Boolean
 from pydantic import BaseModel
 from sqlalchemy.ext.declarative import declarative_base
 
 Base = declarative_base()
 
-class Record(Base):
-    __tablename__ = "Records"
+class Review(Base):
+    __tablename__ = "Reviews"
 
     id = Column(Integer, primary_key=True, index=True)
-    country = Column(String(255), index=True)
+    entry = Column(String(255), index=True)
+    language = Column(String(50), index=True)
+    positive = Column(Boolean, index=True)
 
-
-class RecordSchemaBase(BaseModel):
-    country: str
+class ReviewSchemaBase(BaseModel):
+    entry: str
+    language: str
+    positive: bool
     
-class RecordSchema(RecordSchemaBase):
+class ReviewSchema(ReviewSchemaBase):
     id: int
 
     class Config:
